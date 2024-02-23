@@ -83,8 +83,10 @@ jobs:
             echo "Uploading $file"
             curl \
               -X POST \
-              --data-binary @"$file" \
+              -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.RELEASES_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
               -H "Content-Type: application/octet-stream" \
               "${{ steps.create_release.outputs.upload_url }}=$(basename $file)"
+              --data-binary @"$file" \
           done

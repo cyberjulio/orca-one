@@ -9,12 +9,13 @@ bool ScreenManager::_initialized = false;
 
 ScreenManager::ScreenManager(std::shared_ptr<TFT_eSPI> tft)
 {
-    this->_tft = tft;
-
     if (ScreenManager::_initialized)
     {
         throw std::runtime_error("ScreenManager previous initialized. Please, define ScreenManager only time. Use: ScreenManager::getInstance()");
     }
+
+    this->_tft = tft;
+    this->_topBar = new TopBar();
 
     ScreenManager::_initialized = true;
     ScreenManager::_instance = this;
@@ -46,6 +47,7 @@ void ScreenManager::render(std::shared_ptr<TFT_eSPI> tft)
     tft->fillScreen(backgroundColor);
     this->setTextSizeSmall(tft);
     this->_currentScreen->render(tft);
+    this->_topBar->render(tft);
 }
 
 ScreenManager *ScreenManager::getInstance()
@@ -55,7 +57,7 @@ ScreenManager *ScreenManager::getInstance()
 
 void ScreenManager::render()
 {
-    this->render(this->_tft);
+    ScreenManager::_instance->render(ScreenManager::_instance->_tft);
 }
 
 void ScreenManager::setCurrentScreen(Screen *newScreen)

@@ -17,10 +17,10 @@ extern "C"
         class ButtonMenu : public AbstractGuiModule
         {
         protected:
-            int _borderColor = DEFAULT_PRIMARY_COLOR;
-            int _backgroundColor = DEFAULT_PRIMARY_COLOR;
-            int _textColor = DEFAULT_PRIMARY_COLOR;
-            int _selectedTextColor = DEFAULT_INVERTED_COLOR;
+            int _borderColor = THEME_PRIMARY_COLOR;
+            int _backgroundColor = THEME_PRIMARY_COLOR;
+            int _textColor = THEME_PRIMARY_COLOR;
+            int _selectedTextColor = THEME_INVERTED_COLOR;
             int _width = -1;
             int _height = -1;
             int _x = -1;

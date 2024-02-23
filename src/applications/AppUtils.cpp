@@ -3,7 +3,7 @@
 
 using namespace Applications;
 
-void AppUtils::runApplication(std::shared_ptr<AppBase> app)
+void AppUtils::runApplication(AppBase *app)
 {
     auto context = AppContext::newAppContext();
     app->app_main(context);

@@ -13,8 +13,8 @@ void Scrollbar::render(std::shared_ptr<TFT_eSPI> tft)
 
     tft->fillRect(displaySettings.width - 9, 0, 2, displaySettings.height, primaryColor);
 
-    int scrollBarHeight = displaySettings.height / this->_totalItems;
-    int scrollBarY = this->_currentItem * scrollBarHeight;
+    int scrollBarHeight = (displaySettings.height - this->_topBarHeight) / this->_totalItems;
+    int scrollBarY = (this->_currentItem * scrollBarHeight) + this->_topBarHeight;
 
     if (this->_currentItem + 1 == this->_totalItems)
         scrollBarY = displaySettings.height - scrollBarHeight;

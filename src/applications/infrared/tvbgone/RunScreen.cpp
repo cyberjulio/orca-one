@@ -77,6 +77,9 @@ void RunScreen::execute()
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 
+    this->_progressBar.setProgress(100);
+    this->_progressBar.render(this->_tft);
+
     infraredInterface->disable();
 
     this->_isRunning = false;

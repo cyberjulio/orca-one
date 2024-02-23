@@ -17,11 +17,11 @@ extern "C"
         class ProgressBar : public AbstractGuiModule
         {
         protected:
-            int _borderColor = DEFAULT_PRIMARY_COLOR;
-            int _backgroundColor = DEFAULT_BACKGROUND_COLOR;
-            int _progressColor = DEFAULT_PRIMARY_COLOR;
-            int _textColor = DEFAULT_PRIMARY_COLOR;
-            int _invertedTextColor = DEFAULT_INVERTED_COLOR;
+            int _borderColor = THEME_PRIMARY_COLOR;
+            int _backgroundColor = THEME_BACKGROUND_COLOR;
+            int _progressColor = THEME_PRIMARY_COLOR;
+            int _textColor = THEME_PRIMARY_COLOR;
+            int _invertedTextColor = THEME_INVERTED_COLOR;
             int _width = -1;
             int _height = 25;
             int _x = -1;

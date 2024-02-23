@@ -16,6 +16,7 @@ extern "C"
         class AbstractGuiModule
         {
         protected:
+            const int _topBarHeight = 25;
             String _id;
 
         public:
