@@ -7,7 +7,9 @@ using namespace Domain::Entities;
 
 void BatteryTopBarIcon::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto chargeLevel = 50;
+    auto powerManagementInterface = DeviceBase::getInstance()->getInterfaces().powerManagementInterface;
+
+    auto chargeLevel = powerManagementInterface->getLastBatteryLevel();;
     int chargeWidth = map(chargeLevel, 0, 100, 0, this->_width);
 
     tft->drawRoundRect(this->_x, this->_y, this->_width, this->_height, 3, THEME_PRIMARY_COLOR);

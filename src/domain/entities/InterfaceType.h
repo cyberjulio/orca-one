@@ -9,7 +9,6 @@ extern "C"
         enum InterfaceType
         {
             Display,
-            Battery,
             Wifi,
             Bluetooth,
             Led,

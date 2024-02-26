@@ -4,7 +4,6 @@
 
 #include "DisplayInterfaceBase.h"
 #include "PowerManagementInterfaceBase.h"
-#include "BatteryInterfaceBase.h"
 #include "WifiInterfaceBase.h"
 #include "BluetoothInterfaceBase.h"
 #include "LedInterfaceBase.h"
@@ -26,7 +25,6 @@ namespace Domain::Entities
         std::shared_ptr<InfraredInterfaceBase> infraredInterface;
         std::shared_ptr<LedInterfaceBase> ledInterface;
 		std::shared_ptr<I2CInterfaceBase> i2cInterface;
-        std::shared_ptr<BatteryInterfaceBase> batteryInterface;
         std::shared_ptr<WifiInterfaceBase> wifiInterface;
         std::shared_ptr<BluetoothInterfaceBase> bluetoothInterface;
         std::shared_ptr<SdCardInterfaceBase> sdCardInterface;

@@ -15,6 +15,11 @@ void SdCardInterfaceBase::loop()
 {
 }
 
+bool Domain::Entities::SdCardInterfaceBase::isActive()
+{
+    return this->_initialized && this->_active;
+}
+
 void SdCardInterfaceBase::begin()
 {
     this->_spi = new SPIClass(SDCARD_SPI_BUS);

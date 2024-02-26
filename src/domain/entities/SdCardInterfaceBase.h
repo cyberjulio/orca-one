@@ -24,6 +24,7 @@ extern "C"
             InterfaceType getType();
             virtual void begin();
             virtual void loop();
+            virtual bool isActive();
         };
     }
 #ifdef __cplusplus
