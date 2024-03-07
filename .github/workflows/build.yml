@@ -26,7 +26,7 @@ jobs:
         run: pip install requests esptool
 
       - name: Set Build Number in platformio.ini
-        run: sed -i "s/\[_BUILD_NUMBER_\]/v0.0.${{ github.run_number }}/g" platformio.ini
+        run: sed -i "s/\[_BUILD_NUMBER_\]/${{ vars.CURRENT_VERSION }}.${{ github.run_number }}/g" platformio.ini
 
       - name: Install PlatformIO Core
         run: |
@@ -40,16 +40,15 @@ jobs:
 
       - name: Merge output binaries files
         run: |
-          esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus1_1/release.bin --flash_mode dio --flash_size 4MB 0x1000 .pio/build/m5stack-cplus1_1/bootloader.bin 0x8000 .pio/build/m5stack-cplus1_1/partitions.bin 0x10000 .pio/build/m5stack-cplus1_1/firmware.bin 0x210000 .pio/build/m5stack-cplus1_1/littlefs.bin
-          esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus2/release.bin --flash_mode dio --flash_size 8MB 0x1000 .pio/build/m5stack-cplus2/bootloader.bin 0x8000 .pio/build/m5stack-cplus2/partitions.bin 0x10000 .pio/build/m5stack-cplus2/firmware.bin 0x670000 .pio/build/m5stack-cplus2/littlefs.bin
+          esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus1_1/release.bin    --flash_mode dio --flash_size 4MB 0x1000 .pio/build/m5stack-cplus1_1/bootloader.bin 0x8000  .pio/build/m5stack-cplus1_1/partitions.bin  0x10000 .pio/build/m5stack-cplus1_1/firmware.bin  0x210000 .pio/build/m5stack-cplus1_1/littlefs.bin
+          esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus2/release.bin      --flash_mode dio --flash_size 8MB 0x1000 .pio/build/m5stack-cplus2/bootloader.bin 0x8000    .pio/build/m5stack-cplus2/partitions.bin    0x10000 .pio/build/m5stack-cplus2/firmware.bin    0x670000 .pio/build/m5stack-cplus2/littlefs.bin
           esptool.py --chip esp32s3 merge_bin -o .pio/build/m5stack-cardputer/release.bin --flash_mode dio --flash_size 8MB 0x0000 .pio/build/m5stack-cardputer/bootloader.bin 0x8000 .pio/build/m5stack-cardputer/partitions.bin 0x10000 .pio/build/m5stack-cardputer/firmware.bin 0x670000 .pio/build/m5stack-cardputer/littlefs.bin
 
       - name: Rename release.bin files
         run: |
           for file in $(find .pio/build/**/ -name 'release.bin'); do
-            version=$(echo ${{ github.run_number }})
             env=$(basename $(dirname "$file"))
-            new_name="OrcaOne_${env}_v0.0.$version.bin"
+            new_name="OrcaOne_${env}_${{ vars.CURRENT_VERSION }}.${{ github.run_number }}.bin"
             mv "$file" "$(dirname "$file")/$new_name"
           done
           chmod +r .pio/build/**/OrcaOne*.bin
@@ -69,8 +68,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}
         with:
-          tag_name: v0.0.${{ github.run_number }}
-          release_name: v0.0.${{ github.run_number }}
+          tag_name: ${{ vars.CURRENT_VERSION }}.${{ github.run_number }}
+          release_name: ${{ vars.CURRENT_VERSION }}.${{ github.run_number }}
           draft: true
           prerelease: false
           body: |

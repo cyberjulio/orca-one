@@ -4,8 +4,7 @@ using namespace Applications::Services::GUI;
 
 ProgressBar::ProgressBar()
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
     int progressBarMargin = 10;
     this->_width = displaySettings.width - (progressBarMargin * 2);
 }

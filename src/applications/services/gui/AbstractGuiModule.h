@@ -6,6 +6,8 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include "../../../Consts.h"
+#include "../../../domain/entities/DisplayInterfaceBase.h"
+#include "../../../domain/entities/DisplaySettings.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -18,6 +20,9 @@ extern "C"
         protected:
             const int _topBarHeight = 25;
             String _id;
+            std::shared_ptr<Domain::Entities::DisplayInterfaceBase> getDisplayInterface();
+            Domain::Entities::DisplaySettings getDisplaySettings();
+            String translate(String key);
 
         public:
             virtual void render(std::shared_ptr<TFT_eSPI> tft) = 0;

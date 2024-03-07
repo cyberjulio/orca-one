@@ -101,8 +101,7 @@ void RunScreen::start()
 
 void RunScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
 
     this->setTextSizeSmall(tft);
 
@@ -117,7 +116,7 @@ void RunScreen::render(std::shared_ptr<TFT_eSPI> tft)
 
     tft->drawString(title, titleX, 5);
     tft->setCursor(0, displaySettings.height - 35);
-    tft->println(TRANSLATE("PressAnyButtonToStop"));
+    tft->println(this->translate("PressAnyButtonToStop"));
 
     int progressBarMargin = 10;
     this->_progressBar.setPosition(progressBarMargin, (displaySettings.height - this->_progressBar.getHeight()) / 2);

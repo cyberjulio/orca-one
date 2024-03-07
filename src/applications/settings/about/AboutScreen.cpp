@@ -21,10 +21,10 @@ void AboutScreen::render(std::shared_ptr<TFT_eSPI> tft)
 
     tft->setTextSize(displayInterface->getTextSizeTiny());
     tft->println("");
-    tft->println(" " + TRANSLATE("Device") + ": " + deviceName);
-    tft->println(" " + TRANSLATE("Version") + ": " + String(BUILD_NUMBER));
+    tft->println(" " + this->translate("Device") + ": " + deviceName);
+    tft->println(" " + this->translate("Version") + ": " + String(BUILD_NUMBER));
     tft->println("");
-    tft->println(" " + TRANSLATE("Contributors") + ":");
+    tft->println(" " + this->translate("Contributors") + ":");
     tft->println("   @cyberjulio");
     tft->println("   @marivaaldo");
     tft->println("   @n0xa");

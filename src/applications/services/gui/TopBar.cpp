@@ -9,9 +9,8 @@ void TopBar::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
     auto deviceName = device->getSettings()->getDeviceName();
-    auto displayInterface = device->getInterfaces().displayInterface;
     auto sdCardInterface = device->getInterfaces().sdCardInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
 
     tft->setTextColor(THEME_PRIMARY_COLOR);
 

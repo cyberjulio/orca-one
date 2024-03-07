@@ -14,8 +14,7 @@ SplashScreen::SplashScreen(std::shared_ptr<TFT_eSPI> tft) : Screen(tft)
 void SplashScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
-    auto displayInterface = device->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
     auto primaryColor = device->getSettings()->getPrimaryColor();
     auto backgroundColor = device->getSettings()->getBackgroundColor();
     auto splashFile = String("/imgs/splash_") + String(displaySettings.width) + String("x") + String(displaySettings.height) + String(".jpg");
@@ -38,7 +37,7 @@ void SplashScreen::render(std::shared_ptr<TFT_eSPI> tft)
     tft->drawString(version, versionX, 30);
 
     this->setTextSizeSmall(tft);
-    auto deviceName = device->getSettings()->getDeviceName();
+    auto deviceName = DeviceBase::getInstance()->getSettings()->getDeviceName();
     auto deviceNameX = (displaySettings.width - tft->textWidth(deviceName)) / 2;
     tft->drawString(deviceName, deviceNameX, displaySettings.height - 25);
 

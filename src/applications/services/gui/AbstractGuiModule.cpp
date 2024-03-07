@@ -1,8 +1,23 @@
 #include "AbstractGuiModule.h"
 #include "../../../domain/entities/DeviceBase.h"
+#include "../../Translate.h"
 
 using namespace Applications::Services::GUI;
-using namespace Domain::Entities;
+
+std::shared_ptr<Domain::Entities::DisplayInterfaceBase> AbstractGuiModule::getDisplayInterface()
+{
+    return Domain::Entities::DeviceBase::getInstance()->getInterfaces().displayInterface;
+}
+
+DisplaySettings AbstractGuiModule::getDisplaySettings()
+{
+    return this->getDisplayInterface()->getSettings();
+}
+
+String AbstractGuiModule::translate(String key)
+{
+    return Applications::Translate::getInstance()->get(key);
+}
 
 void AbstractGuiModule::setId(String id)
 {
@@ -16,26 +31,22 @@ const String AbstractGuiModule::getId()
 
 void AbstractGuiModule::setTextSizeBig(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    tft->setTextSize(displayInterface->getTextSizeBig());
+    tft->setTextSize(this->getDisplayInterface()->getTextSizeBig());
 }
 
 void AbstractGuiModule::setTextSizeMedium(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    tft->setTextSize(displayInterface->getTextSizeMedium());
+    tft->setTextSize(this->getDisplayInterface()->getTextSizeMedium());
 }
 
 void AbstractGuiModule::setTextSizeSmall(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    tft->setTextSize(displayInterface->getTextSizeSmall());
+    tft->setTextSize(this->getDisplayInterface()->getTextSizeSmall());
 }
 
 void AbstractGuiModule::setTextSizeTiny(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    tft->setTextSize(displayInterface->getTextSizeTiny());
+    tft->setTextSize(this->getDisplayInterface()->getTextSizeTiny());
 }
 
 void AbstractGuiModule::drawBorderedText(std::shared_ptr<TFT_eSPI> tft, String text, int x, int y, int borderSize, uint16_t textColor, uint16_t borderColor)

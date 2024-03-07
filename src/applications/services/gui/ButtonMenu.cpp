@@ -9,8 +9,7 @@ using namespace Domain::Entities;
 void ButtonMenu::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
     auto primaryColor = colorToUInt16(device->getSettings()->getPrimaryColor());
     auto backgroundColor = colorToUInt16(device->getSettings()->getBackgroundColor());
 

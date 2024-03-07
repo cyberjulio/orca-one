@@ -24,31 +24,31 @@ MainMenuScreen::MainMenuScreen(std::shared_ptr<TFT_eSPI> tft) : MenuScreen(tft, 
 
 MenuItem MainMenuScreen::newAppsMainMenuItem()
 {
-    MenuItem appsMenuItem("appsMenuItem", TRANSLATE("MainMenu_Apps"));
+    MenuItem appsMenuItem("appsMenuItem", this->translate("MainMenu_Apps"));
     return appsMenuItem;
 }
 
 MenuItem MainMenuScreen::newWifiMainMenuItem()
 {
-    MenuItem wifiMenuItem("wifiMenuItem", TRANSLATE("MainMenu_Wifi"));
+    MenuItem wifiMenuItem("wifiMenuItem", this->translate("MainMenu_Wifi"));
     return wifiMenuItem;
 }
 
 MenuItem MainMenuScreen::newBluetoothMainMenuItem()
 {
-    MenuItem bluetoothMenuItem("bluetoothMenuItem", TRANSLATE("MainMenu_Bluetooth"));
+    MenuItem bluetoothMenuItem("bluetoothMenuItem", this->translate("MainMenu_Bluetooth"));
     return bluetoothMenuItem;
 }
 
 MenuItem MainMenuScreen::newSubGhzMainMenuItem()
 {
-    MenuItem subGhzMenuItem("subGhzMenuItem", TRANSLATE("MainMenu_SubGhz"));
+    MenuItem subGhzMenuItem("subGhzMenuItem", this->translate("MainMenu_SubGhz"));
     return subGhzMenuItem;
 }
 
 MenuItem MainMenuScreen::newNfcMainMenuItem()
 {
-    MenuItem nfcMenuItem("nfcMenuItem", TRANSLATE("MainMenu_Nfc"));
+    MenuItem nfcMenuItem("nfcMenuItem", this->translate("MainMenu_Nfc"));
 	MenuItem nfcReadTagSubMenuItem("nfcReadTagSubMenuItem", "Read Tag");
 
     nfcReadTagSubMenuItem.setOnClick([]() { AppUtils::runApplication<Applications::Nfc::ReadTag::ReadTagApp>(); });
@@ -59,7 +59,7 @@ MenuItem MainMenuScreen::newNfcMainMenuItem()
 
 MenuItem MainMenuScreen::newInfraredMainMenuItem()
 {
-    MenuItem infraredMenuItem("infraredMenuItem", TRANSLATE("MainMenu_Infrared"));
+    MenuItem infraredMenuItem("infraredMenuItem", this->translate("MainMenu_Infrared"));
 
     //  TV-B-Gone
     MenuItem infraredTVBGoneSubMenuItem("infraredTVBGoneSubMenuItem", "TV-B-Gone");
@@ -72,7 +72,7 @@ MenuItem MainMenuScreen::newInfraredMainMenuItem()
 
 MenuItem MainMenuScreen::newBadUsbMainMenuItem()
 {
-    MenuItem badUsbMenuItem("badUsbMenuItem", TRANSLATE("MainMenu_BadUSB"));
+    MenuItem badUsbMenuItem("badUsbMenuItem", this->translate("MainMenu_BadUSB"));
     return badUsbMenuItem;
 }
 
@@ -103,7 +103,7 @@ MenuItem MainMenuScreen::newSettingsColorSubMenuItem()
 
 MenuItem MainMenuScreen::newSettingsMainMenuItem()
 {
-    MenuItem settingsMenuItem("settingsMenuItem", TRANSLATE("MainMenu_Settings"));
+    MenuItem settingsMenuItem("settingsMenuItem", this->translate("MainMenu_Settings"));
 
     // Web UI
     MenuItem settingsWebUISubMenuItem("settingsWebUISubMenuItem", "Web UI");
@@ -115,7 +115,7 @@ MenuItem MainMenuScreen::newSettingsMainMenuItem()
     settingsMenuItem.addItem(MainMenuScreen::newSettingsColorSubMenuItem());
 
     // Language
-    MenuItem settingsLanguageSubMenuItem("settingsLanguageSubMenuItem", TRANSLATE("MainMenu_Settings_Language"));
+    MenuItem settingsLanguageSubMenuItem("settingsLanguageSubMenuItem", this->translate("MainMenu_Settings_Language"));
     MenuItem settingsLanguageEnglishSubMenuItem("settingsLanguageEnglishSubMenuItem", "English");
     MenuItem settingsLanguagePortuguesBrasilSubMenuItem("settingsLanguagePortuguesBrasilSubMenuItem", "Portugues (BR)");
 
@@ -145,13 +145,13 @@ MenuItem MainMenuScreen::newSettingsMainMenuItem()
     settingsMenuItem.addItem(settingsLanguageSubMenuItem);
 
     // Reboot
-    MenuItem settingsRebootSubMenuItem("settingsRebootSubMenuItem", TRANSLATE("MainMenu_Settings_Reboot"));
+    MenuItem settingsRebootSubMenuItem("settingsRebootSubMenuItem", this->translate("MainMenu_Settings_Reboot"));
     settingsRebootSubMenuItem.setOnClick([]()
                                          { ESP.restart(); });
     settingsMenuItem.addItem(settingsRebootSubMenuItem);
 
     // About
-    MenuItem settingsAboutSubMenuItem("settingsAboutSubMenuItem", TRANSLATE("MainMenu_Settings_About"));
+    MenuItem settingsAboutSubMenuItem("settingsAboutSubMenuItem", this->translate("MainMenu_Settings_About"));
     settingsAboutSubMenuItem.setOnClick([]()
                                         { AppUtils::runApplication<Applications::Settings::About::AboutApp>(); });
     settingsMenuItem.addItem(settingsAboutSubMenuItem);
