@@ -7,8 +7,6 @@
 #include "../domain/entities/Language.h"
 using namespace Domain::Entities;
 
-// #define TRANSLATEd(key) Applications::Translate::getInstance()->get(key)
-
 #ifdef __cplusplus
 extern "C"
 {

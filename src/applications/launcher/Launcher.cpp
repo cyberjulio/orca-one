@@ -40,8 +40,8 @@ void Launcher::begin()
 
     this->_translate = Translate::fromFile(language, SPIFFS_STORAGE, String("/translate/" + languageToString(language) + ".json").c_str());
     this->_screenManager = new ScreenManager(tft);
-    this->_screenManager->setCurrentScreen(new SplashScreen(tft));
-    this->_screenManager->setCurrentScreen(new MainMenuScreen(tft));
+    this->_screenManager->setCurrentScreen<SplashScreen>(false);
+    this->_screenManager->setCurrentScreen<MainMenuScreen>(false);
 }
 
 void Launcher::loop()

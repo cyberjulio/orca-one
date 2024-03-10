@@ -114,7 +114,7 @@ void RunScreen::render(std::shared_ptr<TFT_eSPI> tft)
     if (titleX < 0)
         titleX = 0;
 
-    tft->drawString(title, titleX, 5);
+    tft->drawString(title, titleX, this->_topBarHeight + 5);
     tft->setCursor(0, displaySettings.height - 35);
     tft->println(this->translate("PressAnyButtonToStop"));
 

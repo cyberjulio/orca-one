@@ -31,23 +31,30 @@ WebUIScreen::WebUIScreen(std::shared_ptr<TFT_eSPI> tft) : Screen(tft)
 
 void WebUIScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
+    this->setTextSizeSmall(tft);
+
     auto displaySettings = this->getDisplaySettings();
+    auto title = String("Web UI");
+    auto titleX = (displaySettings.width - tft->textWidth(title)) / 2;
+    auto textStarting = this->translate("Starting") + "...";
+    auto textStartingX = (displaySettings.width - tft->textWidth(textStarting)) / 2;
+
+    tft->drawString(title, titleX, this->_topBarHeight + 5);
+    tft->drawString(textStarting, textStartingX, this->_topBarHeight + 5 + tft->fontHeight());
 
     this->startServer();
 
-    IPAddress ipAddress = WiFi.softAPIP();
-
-    this->setTextSizeMedium(tft);
-    auto title = String("Web UI");
-    auto titleX = (displaySettings.width - tft->textWidth(title)) / 2;
-    tft->drawString(title, titleX, 5);
-
-    this->setTextSizeSmall(tft);
-    tft->setCursor(0, 35);
+    tft->fillRect(0, this->_topBarHeight + 5 + tft->fontHeight(), displaySettings.width, tft->fontHeight(), THEME_BACKGROUND_COLOR);
+    tft->setCursor(0, this->_topBarHeight + 5 + tft->fontHeight());
     tft->println("SSID: " + this->_ssid);
-    tft->println("Password: " + this->_ssidPassword);
-    tft->println("URL:\nhttp://" + ipAddress.toString());
-    tft->println("\nPress select to exit");
+    tft->println(this->translate("Password") + ": " + this->_ssidPassword);
+    tft->println("URL:\nhttp://" + WiFi.softAPIP().toString());
+
+    this->setTextSizeTiny(tft);
+    auto textExit = this->translate("PressSelectToExit");
+    auto textExitX = (displaySettings.width - tft->textWidth(textExit)) / 2;
+
+    tft->drawString(textExit, textExitX, tft->getCursorY() + 10);
 }
 
 void WebUIScreen::buttonSelectPressed()
@@ -69,7 +76,7 @@ void WebUIScreen::handleSettingsPost()
     }
 
     auto jsonString = this->_webServer->arg("plain");
-    
+
     Domain::Entities::Settings newSettings(jsonString);
     auto currentSettings = DeviceBase::getInstance()->getSettings();
 

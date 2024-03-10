@@ -22,15 +22,15 @@ namespace Applications::Services::GUI
         ScreenManager(std::shared_ptr<TFT_eSPI> tft);
 
         static ScreenManager *getInstance();
-        static void setCurrentScreen(Screen *newScreen);
+        static void setCurrentScreen(Screen *newScreen, bool setPrevious = true);
         static void setToPreviousScreen();
 
         template <typename T>
-        static void setCurrentScreen()
+        static void setCurrentScreen(bool setPrevious = true)
         {
             auto tft = ScreenManager::getInstance()->_tft;
             auto screen = new T(tft);
-            ScreenManager::setCurrentScreen(screen);
+            ScreenManager::setCurrentScreen(screen, setPrevious);
         }
 
         static Screen *getCurrentScreen();

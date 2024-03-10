@@ -10,16 +10,17 @@ using namespace Domain::Entities;
 void AboutScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
-    auto displayInterface = device->getInterfaces().displayInterface;
+    auto displaySettings = this->getDisplaySettings();
     auto deviceName = device->getName();
     tft->setTextDatum(TL_DATUM);
 
-    tft->setCursor(5, 0);
+    this->setTextSizeSmall(tft);
+    auto title = String("Orca One");
+    auto titleX = (displaySettings.width - tft->textWidth(title)) / 2;
+    tft->drawString(title, titleX, this->_topBarHeight + 5);
 
-    tft->setTextSize(displayInterface->getTextSizeMedium());
-    tft->println("  Orca One");
-
-    tft->setTextSize(displayInterface->getTextSizeTiny());
+    this->setTextSizeTiny(tft);
+    tft->setCursor(0, this->_topBarHeight + 5 + tft->fontHeight() + 5);
     tft->println("");
     tft->println(" " + this->translate("Device") + ": " + deviceName);
     tft->println(" " + this->translate("Version") + ": " + String(BUILD_NUMBER));
