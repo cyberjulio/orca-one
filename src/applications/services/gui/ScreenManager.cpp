@@ -20,22 +20,22 @@ ScreenManager::ScreenManager(std::shared_ptr<TFT_eSPI> tft)
     ScreenManager::_initialized = true;
     ScreenManager::_instance = this;
 
-    auto buttonsInterface = DeviceBase::getInstance()->getInterfaces().buttonsInterface;
+    auto buttons = DeviceBase::getInstance()->getInterfaces().buttons;
 
     auto menuScreen = this;
 
-    if (buttonsInterface != nullptr)
+    if (buttons != nullptr)
     {
-        buttonsInterface->registerOnClickNext([this]()
+        buttons->registerOnClickNext([this]()
                                               { _currentScreen->buttonNextPressed(); });
 
-        buttonsInterface->registerOnClickPrevious([this]()
+        buttons->registerOnClickPrevious([this]()
                                                   { _currentScreen->buttonPreviousPressed(); });
 
-        buttonsInterface->registerOnClickSelect([this]()
+        buttons->registerOnClickSelect([this]()
                                                 { _currentScreen->buttonSelectPressed(); });
 
-        buttonsInterface->registerOnClickBack([this]()
+        buttons->registerOnClickBack([this]()
                                               { _currentScreen->buttonBackPressed(); });
     }
 }

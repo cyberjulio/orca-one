@@ -18,7 +18,8 @@ extern "C"
             Keyboard,
             Buttons,
             Infrared,
-			I2C
+			I2C,
+            Microphone
         };
     }
 #ifdef __cplusplus

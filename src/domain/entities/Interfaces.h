@@ -13,21 +13,23 @@
 #include "ButtonsInterfaceBase.h"
 #include "InfraredInterfaceBase.h"
 #include "I2CInterfaceBase.h"
+#include "MicrophoneInterfaceBase.h"
 
 namespace Domain::Entities
 {
     struct Interfaces
     {
-        std::shared_ptr<DisplayInterfaceBase> displayInterface;
-        std::shared_ptr<ButtonsInterfaceBase> buttonsInterface;
-        std::shared_ptr<PowerManagementInterfaceBase> powerManagementInterface;
-        std::shared_ptr<KeyboardInterfaceBase> keyboardInterface;
-        std::shared_ptr<InfraredInterfaceBase> infraredInterface;
-        std::shared_ptr<LedInterfaceBase> ledInterface;
-		std::shared_ptr<I2CInterfaceBase> i2cInterface;
-        std::shared_ptr<WifiInterfaceBase> wifiInterface;
-        std::shared_ptr<BluetoothInterfaceBase> bluetoothInterface;
-        std::shared_ptr<SdCardInterfaceBase> sdCardInterface;
-        std::shared_ptr<GpsInterfaceBase> gpsInterface;
+        std::shared_ptr<DisplayInterfaceBase> display;
+        std::shared_ptr<ButtonsInterfaceBase> buttons;
+        std::shared_ptr<PowerManagementInterfaceBase> powerManagement;
+        std::shared_ptr<KeyboardInterfaceBase> keyboard;
+        std::shared_ptr<InfraredInterfaceBase> infrared;
+        std::shared_ptr<LedInterfaceBase> led;
+		std::shared_ptr<I2CInterfaceBase> i2c;
+        std::shared_ptr<WifiInterfaceBase> wifi;
+        std::shared_ptr<BluetoothInterfaceBase> bluetooth;
+        std::shared_ptr<SdCardInterfaceBase> sdCard;
+        std::shared_ptr<GpsInterfaceBase> gps;
+        std::shared_ptr<MicrophoneInterfaceBase> microphone;
     };
 }

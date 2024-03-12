@@ -19,8 +19,8 @@ void RunScreen::execute()
     this->_isRunning = true;
     this->_stopping = false;
 
-    auto infraredInterface = DeviceBase::getInstance()->getInterfaces().infraredInterface;
-    auto irSend = infraredInterface->getIRSend();
+    auto infrared = DeviceBase::getInstance()->getInterfaces().infrared;
+    auto irSend = infrared->getIRSend();
 
     if (this->_region == TVBGoneRegion::AmericasAsia)
     {
@@ -80,7 +80,7 @@ void RunScreen::execute()
     this->_progressBar.setProgress(100);
     this->_progressBar.render(this->_tft);
 
-    infraredInterface->disable();
+    infrared->disable();
 
     this->_isRunning = false;
     this->_stopping = false;

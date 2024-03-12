@@ -9,12 +9,12 @@ void TopBar::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
     auto deviceName = device->getSettings()->getDeviceName();
-    auto sdCardInterface = device->getInterfaces().sdCardInterface;
+    auto sdCard = device->getInterfaces().sdCard;
     auto displaySettings = this->getDisplaySettings();
 
     tft->setTextColor(THEME_PRIMARY_COLOR);
 
-    if (sdCardInterface->isActive())
+    if (sdCard->isActive())
     {
         this->_sdcardIcon->setPosition(displaySettings.width - this->_batteryIcon->getWidth() - 5 - 35, 1);
         this->_sdcardIcon->render(tft);

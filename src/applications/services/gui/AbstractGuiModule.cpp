@@ -6,7 +6,7 @@ using namespace Applications::Services::GUI;
 
 std::shared_ptr<Domain::Entities::DisplayInterfaceBase> AbstractGuiModule::getDisplayInterface()
 {
-    return Domain::Entities::DeviceBase::getInstance()->getInterfaces().displayInterface;
+    return Domain::Entities::DeviceBase::getInstance()->getInterfaces().display;
 }
 
 DisplaySettings AbstractGuiModule::getDisplaySettings()
