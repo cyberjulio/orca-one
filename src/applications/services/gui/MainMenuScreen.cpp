@@ -78,7 +78,7 @@ MenuItem MainMenuScreen::newBadUsbMainMenuItem()
 
 MenuItem MainMenuScreen::newSettingsColorSubMenuItem()
 {
-    MenuItem settingsColorSubMenuItem("settingsColorSubMenuItem", TRANSLATE("MainMenu_Settings_Color"));
+    MenuItem settingsColorSubMenuItem("settingsColorSubMenuItem", this->translate("MainMenu_Settings_Color"));
     auto currentSettings = DeviceBase::getInstance()->getSettings();
 
     for (int currColorIdx = Default; currColorIdx <= LATEST_COLOR_SCHEME_INDEX; currColorIdx++)

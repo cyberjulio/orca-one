@@ -14,7 +14,7 @@ void PowerManagementInterfaceBase::loop()
     if (batteryLevel != this->_lastBatteryLevel)
     {
         this->_lastBatteryLevel = batteryLevel;
-        this->_onBatteryLevelChanged.fireEvent();
+        this->_onBatteryLevelChanged.fireEvent(batteryLevel);
     }
 }
 
@@ -25,11 +25,11 @@ void PowerManagementInterfaceBase::begin()
     if (batteryLevel != this->_lastBatteryLevel)
     {
         this->_lastBatteryLevel = batteryLevel;
-        this->_onBatteryLevelChanged.fireEvent();
+        this->_onBatteryLevelChanged.fireEvent(batteryLevel);
     }
 }
 
-void PowerManagementInterfaceBase::registerBatteryLevelChanged(std::function<void()> handler)
+void PowerManagementInterfaceBase::registerBatteryLevelChanged(std::function<void(int)> handler)
 {
     this->_onBatteryLevelChanged.addHandler(handler);
 }

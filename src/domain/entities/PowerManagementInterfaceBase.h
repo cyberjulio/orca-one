@@ -17,12 +17,12 @@ extern "C"
 
             virtual void begin();
             virtual void loop();
-            void registerBatteryLevelChanged(std::function<void()> handler);
+            void registerBatteryLevelChanged(std::function<void(int)> handler);
             int getLastBatteryLevel();
             virtual int readBatteryLevel() = 0;
 
         protected:
-            EventHandler _onBatteryLevelChanged = EventHandler();
+            GenericEventHandler<int> _onBatteryLevelChanged;
             int _lastBatteryLevel = -1;
         };
     }

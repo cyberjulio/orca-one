@@ -3,22 +3,38 @@
 #include <functional>
 #include <vector>
 
-#ifdef __cplusplus
-extern "C"
+namespace Domain::Entities
 {
-#endif
-    namespace Domain::Entities
+    template <typename T>
+    class GenericEventHandler
     {
-        class EventHandler
+    public:
+        inline void addHandler(std::function<void(T)> handler)
         {
-        public:
-            void addHandler(std::function<void()> handler);
-            void fireEvent();
+            this->_handlers.push_back(handler);
+        }
 
-        private:
-            std::vector<std::function<void()>> _handlers = std::vector<std::function<void()>>();
-        };
-    }
-#ifdef __cplusplus
+        inline void fireEvent(T param)
+        {
+            for (const auto &handler : this->_handlers)
+            {
+                handler(param);
+            }
+        }
+
+    protected:
+        std::vector<std::function<void(T)>> _handlers = std::vector<std::function<void(T)>>();
+    };
+
+    class EventHandler : public GenericEventHandler<void *>
+    {
+    public:
+        inline void fireEvent()
+        {
+            for (const auto &handler : this->_handlers)
+            {
+                handler(nullptr);
+            }
+        }
+    };
 }
-#endif

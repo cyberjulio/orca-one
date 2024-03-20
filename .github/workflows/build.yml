@@ -43,7 +43,8 @@ jobs:
           esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus1_1/release.bin    --flash_mode dio --flash_size 4MB 0x1000 .pio/build/m5stack-cplus1_1/bootloader.bin 0x8000  .pio/build/m5stack-cplus1_1/partitions.bin  0x10000 .pio/build/m5stack-cplus1_1/firmware.bin  0x210000 .pio/build/m5stack-cplus1_1/littlefs.bin
           esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus2/release.bin      --flash_mode dio --flash_size 8MB 0x1000 .pio/build/m5stack-cplus2/bootloader.bin 0x8000    .pio/build/m5stack-cplus2/partitions.bin    0x10000 .pio/build/m5stack-cplus2/firmware.bin    0x670000 .pio/build/m5stack-cplus2/littlefs.bin
           esptool.py --chip esp32s3 merge_bin -o .pio/build/m5stack-cardputer/release.bin --flash_mode dio --flash_size 8MB 0x0000 .pio/build/m5stack-cardputer/bootloader.bin 0x8000 .pio/build/m5stack-cardputer/partitions.bin 0x10000 .pio/build/m5stack-cardputer/firmware.bin 0x670000 .pio/build/m5stack-cardputer/littlefs.bin
-
+        if: github.event_name != 'pull_request'
+        
       - name: Rename release.bin files
         run: |
           for file in $(find .pio/build/**/ -name 'release.bin'); do
@@ -89,3 +90,4 @@ jobs:
               "${{ steps.create_release.outputs.upload_url }}=$(basename $file)"
               --data-binary @"$file" \
           done
+        if: github.event_name != 'pull_request'

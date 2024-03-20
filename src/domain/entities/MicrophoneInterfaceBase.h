@@ -2,6 +2,8 @@
 
 #include "IInterface.h"
 #include "InterfaceType.h"
+#include "EventHandler.h"
+#include "RecordedSample.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -11,14 +13,19 @@ extern "C"
     {
         class MicrophoneInterfaceBase : public IInterface
         {
-        protected:
-            size_t _sample_rate = 44100;
-            size_t _max_buffer = 512;
-
         public:
+            MicrophoneInterfaceBase()
+            {
+                this->_active = false;
+            }
+
             InterfaceType getType();
             virtual void begin() = 0;
             virtual void loop() = 0;
+            void registerOnRecorded(std::function<void(RecordedSample)> handler);
+
+        protected:
+            GenericEventHandler<RecordedSample> _onRecorded;
         };
     }
 #ifdef __cplusplus
