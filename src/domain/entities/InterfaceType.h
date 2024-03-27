@@ -18,7 +18,8 @@ extern "C"
             Gps,
             Keyboard,
             Buttons,
-            Infrared
+            Infrared,
+			I2C
         };
     }
 #ifdef __cplusplus

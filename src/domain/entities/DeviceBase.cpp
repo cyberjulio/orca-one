@@ -114,6 +114,9 @@ void DeviceBase::loop()
     if (this->_interfaces.infraredInterface != nullptr)
         this->_interfaces.infraredInterface->loop();
 
+	if (this->_interfaces.i2cInterface != nullptr)
+        this->_interfaces.i2cInterface->loop();
+
     delay(150);
 }
 
@@ -143,6 +146,8 @@ bool DeviceBase::hasInterface(InterfaceType type)
         return this->_interfaces.buttonsInterface != nullptr;
     case InterfaceType::Infrared:
         return this->_interfaces.infraredInterface != nullptr;
+    case InterfaceType::I2C:
+        return this->_interfaces.i2cInterface != nullptr;
     default:
         return false;
     }

@@ -13,6 +13,7 @@
 #include "KeyboardInterfaceBase.h"
 #include "ButtonsInterfaceBase.h"
 #include "InfraredInterfaceBase.h"
+#include "I2CInterfaceBase.h"
 
 namespace Domain::Entities
 {
@@ -24,6 +25,7 @@ namespace Domain::Entities
         std::shared_ptr<KeyboardInterfaceBase> keyboardInterface;
         std::shared_ptr<InfraredInterfaceBase> infraredInterface;
         std::shared_ptr<LedInterfaceBase> ledInterface;
+		std::shared_ptr<I2CInterfaceBase> i2cInterface;
         std::shared_ptr<BatteryInterfaceBase> batteryInterface;
         std::shared_ptr<WifiInterfaceBase> wifiInterface;
         std::shared_ptr<BluetoothInterfaceBase> bluetoothInterface;
