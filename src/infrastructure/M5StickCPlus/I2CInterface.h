@@ -6,9 +6,6 @@
 
 #include "../../domain/entities/I2CInterfaceBase.h"
 
-#define SDA_PIN 32
-#define SCL_PIN 33
-
 #ifdef __cplusplus
 extern "C"
 {
