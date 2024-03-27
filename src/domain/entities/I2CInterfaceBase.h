@@ -18,7 +18,7 @@ extern "C"
         virtual void begin(int sda_pin, int scl_pin) = 0;
         virtual void loop() = 0;
         virtual void end() = 0;
-        TwoWire i2c = TwoWire(0);
+        TwoWire _wire = TwoWire(0);
     };
     } // namespace Domain::Entities
 #ifdef __cplusplus

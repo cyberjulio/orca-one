@@ -2,7 +2,12 @@
 
 #include "../../services/gui/ScreenManager.h"
 #include "../../taskmanager/TaskManager.h"
+#include "../../../domain/entities/I2CInterfaceBase.h"
+#include "../../../domain/entities/DeviceBase.h"
+#include "PN532.h"
+#include "PN532_I2C.h"
 #include <cstdint>
+#include <string>
 
 using namespace Applications;
 using namespace Applications::Services::GUI;
@@ -16,6 +21,9 @@ extern "C"
     class ReadTagRun : public Screen
     {
       private:
+		std::shared_ptr<I2CInterfaceBase> _i2cInterface;
+		PN532_I2C *_pn532i2c;
+		PN532 *_nfc;
         bool _isRunning = false;
         bool _stopping = false;
         bool _isAgain = true;
@@ -26,6 +34,9 @@ extern "C"
       public:
         ReadTagRun(std::shared_ptr<TFT_eSPI> tft) : Screen(tft)
         {
+			this->_i2cInterface = DeviceBase::getInstance()->getInterfaces().i2cInterface;
+			this->_pn532i2c = new PN532_I2C(this->_i2cInterface->_wire);
+			this->_nfc = new PN532(*this->_pn532i2c);
         }
 
         void render(std::shared_ptr<TFT_eSPI> tft);

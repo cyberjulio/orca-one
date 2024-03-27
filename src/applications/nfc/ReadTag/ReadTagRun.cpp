@@ -1,14 +1,4 @@
 #include "ReadTagRun.h"
-#include "../../../domain/entities/DeviceBase.h"
-#include "PN532.h"
-#include "PN532_I2C.h"
-#include <cstdint>
-#include <string>
-
-auto i2cInterface = DeviceBase::getInstance() -> getInterfaces().i2cInterface;
-
-PN532_I2C pn532i2c(i2cInterface->i2c);
-PN532 nfc(pn532i2c);
 
 using namespace Applications::Nfc::ReadTag;
 
@@ -28,20 +18,22 @@ void ReadTagRun::execute()
     this->_isRunning = true;
     this->_stopping = false;
 
+	Serial.println("INICIO READ TAG");
+
     uint8_t success;
     uint8_t uid[] = {0, 0, 0, 0, 0, 0, 0};
     uint8_t uidLength;
     uint8_t *nfcBuffer;
     uint8_t nfcBufferLength;
 
-    uint32_t versiondata = nfc.getFirmwareVersion();
+    uint32_t versiondata = this->_nfc->getFirmwareVersion();
     if (!versiondata)
     {
         this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
         this->showInfo(TRANSLATE("PN532NotFound"), 15, 35, this->_tft);
         vTaskDelay(pdMS_TO_TICKS(3000));
         // this->buttonBackPressed();
-        i2cInterface->end();
+        this->_i2cInterface->end();
         this->_isRunning = false;
         this->_stopping = false;
         ScreenManager::setCurrentScreen(this->_previousScreen);
@@ -54,11 +46,11 @@ void ReadTagRun::execute()
             this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
             this->showInfo(TRANSLATE("WaitTag"), 10, 35, this->_tft);
 
-            success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
+            success = this->_nfc->readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
 
             if (success)
             {
-                nfcBuffer = nfc.getBuffer(&nfcBufferLength);
+                nfcBuffer = this->_nfc->getBuffer(&nfcBufferLength);
                 this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
                 this->showInfo("UID:" + this->hexToString(uid, uidLength), 15, 35, this->_tft);
                 this->showInfo("ATQ:" + String(nfcBuffer[3], HEX), 15, this->_tft->getCursorY() + 5, this->_tft);
@@ -76,7 +68,11 @@ void ReadTagRun::execute()
             break;
     }
 
-    i2cInterface->end();
+	Serial.println("FIM READ TAG");
+
+    this->_i2cInterface->end();
+	delete this->_pn532i2c;
+	delete this->_nfc;
 
     this->_isRunning = false;
     this->_stopping = false;
@@ -87,10 +83,10 @@ void ReadTagRun::start()
     if (this->_isRunning)
         return;
 
-    i2cInterface->begin();
+    this->_i2cInterface->begin();
 
-    nfc.begin();
-    nfc.SAMConfig();
+    this->_nfc->begin();
+    this->_nfc->SAMConfig();
 
     xTaskCreatePinnedToCore(
         [](void *param) {
