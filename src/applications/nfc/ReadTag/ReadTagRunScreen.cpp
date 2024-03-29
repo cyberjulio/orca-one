@@ -18,8 +18,6 @@ void ReadTagRun::execute()
     this->_isRunning = true;
     this->_stopping = false;
 
-	Serial.println("INICIO READ TAG");
-
     uint8_t success;
     uint8_t uid[] = {0, 0, 0, 0, 0, 0, 0};
     uint8_t uidLength;
@@ -68,8 +66,6 @@ void ReadTagRun::execute()
             break;
     }
 
-	Serial.println("FIM READ TAG");
-
     this->_i2cInterface->end();
 	delete this->_pn532i2c;
 	delete this->_nfc;
@@ -82,8 +78,6 @@ void ReadTagRun::start()
 {
     if (this->_isRunning)
         return;
-
-    this->_i2cInterface->begin();
 
     this->_nfc->begin();
     this->_nfc->SAMConfig();

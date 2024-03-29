@@ -76,6 +76,9 @@ void DeviceBase::begin()
     if (this->_interfaces.infraredInterface != nullptr)
         this->_interfaces.infraredInterface->begin();
 
+    if (this->_interfaces.i2cInterface != nullptr)
+        this->_interfaces.i2cInterface->begin();
+
     delay(100);
 }
 
