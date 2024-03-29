@@ -14,11 +14,11 @@ extern "C"
     {
       public:
         InterfaceType getType();
-        virtual void begin() = 0;
-        virtual void begin(int sda_pin, int scl_pin) = 0;
-        virtual void loop() = 0;
-        virtual void end() = 0;
-        TwoWire _wire = TwoWire(0);
+        virtual void begin();
+        virtual void begin(int sda_pin, int scl_pin);
+        virtual void loop();
+        virtual void end();
+        TwoWire *_wire = nullptr;
     };
     } // namespace Domain::Entities
 #ifdef __cplusplus

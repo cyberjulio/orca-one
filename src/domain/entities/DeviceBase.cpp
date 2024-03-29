@@ -1,4 +1,5 @@
 #include "DeviceBase.h"
+#include "I2CInterfaceBase.h"
 
 using namespace Domain::Entities;
 
@@ -22,6 +23,9 @@ DeviceBase::DeviceBase(Interfaces interfaces)
 
     if (this->_interfaces.sdCardInterface == nullptr)
         this->_interfaces.sdCardInterface = std::make_shared<SdCardInterfaceBase>();
+
+    if (this->_interfaces.i2cInterface == nullptr)
+        this->_interfaces.i2cInterface = std::make_shared<I2CInterfaceBase>();
 
     esp_chip_info(&this->_chip_info);
 

@@ -6,7 +6,6 @@
 #include "PowerManagementInterface.h"
 #include "LedInterface.h"
 #include "InfraredInterface.h"
-#include "I2CInterface.h"
 
 using namespace Infrastructure::M5StickCPlus;
 
@@ -15,8 +14,7 @@ Device::Device() : DeviceBase({std::make_shared<DisplayInterface>(),
                                std::make_shared<PowerManagementInterface>(),
                                nullptr,
                                std::make_shared<InfraredInterface>(),
-                               std::make_shared<LedInterface>(), 
-							   std::make_shared<I2CInterface>()})
+                               std::make_shared<LedInterface>()})
 {
 }
 
