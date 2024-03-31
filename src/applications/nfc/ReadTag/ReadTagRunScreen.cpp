@@ -2,6 +2,7 @@
 
 using namespace Applications::Nfc::ReadTag;
 
+
 void ReadTagRun::stop()
 {
     if (this->_isRunning)
@@ -27,7 +28,7 @@ void ReadTagRun::execute()
     uint32_t versiondata = this->_nfc->getFirmwareVersion();
     if (!versiondata)
     {
-        this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
+        this->_tft->fillScreen(_backgroundColor);
         this->showInfo(TRANSLATE("PN532NotFound"), 15, 35, this->_tft);
         vTaskDelay(pdMS_TO_TICKS(3000));
         // this->buttonBackPressed();
@@ -41,7 +42,7 @@ void ReadTagRun::execute()
     {
         if (this->_isAgain)
         {
-            this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
+            this->_tft->fillScreen(_backgroundColor);
             this->showInfo(TRANSLATE("WaitTag"), 10, 35, this->_tft);
 
             success = this->_nfc->readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
@@ -49,14 +50,14 @@ void ReadTagRun::execute()
             if (success)
             {
                 nfcBuffer = this->_nfc->getBuffer(&nfcBufferLength);
-                this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
+                this->_tft->fillScreen(_backgroundColor);
                 this->showInfo("UID:" + this->hexToString(uid, uidLength), 15, 35, this->_tft);
                 this->showInfo("ATQ:" + String(nfcBuffer[3], HEX), 15, this->_tft->getCursorY() + 5, this->_tft);
                 this->showInfo("SAK:" + String(nfcBuffer[4], HEX), 15, this->_tft->getCursorY() + 5, this->_tft);
             }
             else
             {
-                this->_tft->fillScreen(DEFAULT_BACKGROUND_COLOR);
+                this->_tft->fillScreen(_backgroundColor);
                 this->showInfo(TRANSLATE("ErrorTimeOut"), 40, 35, this->_tft);
             }
             this->_isAgain = false;
@@ -64,6 +65,8 @@ void ReadTagRun::execute()
 
         if (this->_stopping)
             break;
+
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 
     this->_i2cInterface->end();
@@ -93,21 +96,19 @@ void ReadTagRun::start()
 
 void ReadTagRun::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
 
     this->setTextSizeSmall(tft);
-    tft->setTextColor(DEFAULT_PRIMARY_COLOR);
+    tft->setTextColor(_primaryColor);
 
     String title = TRANSLATE("ReadMifare");
-    auto titleX = (displaySettings.width - tft->textWidth(title)) / 2;
+    auto titleX = (_displaySettings.width - tft->textWidth(title)) / 2;
 
     if (titleX < 0)
         titleX = 0;
 
     tft->drawString(title, titleX, 5);
     String bottomText = String("OK:") + TRANSLATE("Again") + " ESC:" + TRANSLATE("Exit");
-    tft->setCursor((displaySettings.width - tft->textWidth(bottomText)) / 2, displaySettings.height - 20);
+    tft->setCursor((_displaySettings.width - tft->textWidth(bottomText)) / 2, _displaySettings.height - 20);
     tft->print(bottomText);
 }
 
