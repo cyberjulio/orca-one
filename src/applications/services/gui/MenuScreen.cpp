@@ -37,13 +37,9 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto device = DeviceBase::getInstance();
-    auto backgroundColor = colorToUInt16(device->getSettings()->getBackgroundColor());
-    tft->fillScreen(backgroundColor);
+    tft->fillScreen(this->getBackgroundColor());
 
     auto displaySettings = this->getDisplaySettings();
-
-    // tft->fillScreen(THEME_BACKGROUND_COLOR);
 
     int totalItems = this->_items.size();
 

@@ -44,7 +44,7 @@ void WebUIScreen::render(std::shared_ptr<TFT_eSPI> tft)
 
     this->startServer();
 
-    tft->fillRect(0, this->_topBarHeight + 5 + tft->fontHeight(), displaySettings.width, tft->fontHeight(), THEME_BACKGROUND_COLOR);
+    tft->fillRect(0, this->_topBarHeight + 5 + tft->fontHeight(), displaySettings.width, tft->fontHeight(), this->getBackgroundColor());
     tft->setCursor(0, this->_topBarHeight + 5 + tft->fontHeight());
     tft->println("SSID: " + this->_ssid);
     tft->println(this->translate("Password") + ": " + this->_ssidPassword);

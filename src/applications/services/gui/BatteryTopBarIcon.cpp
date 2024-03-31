@@ -8,16 +8,18 @@ using namespace Domain::Entities;
 void BatteryTopBarIcon::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto powerManagement = DeviceBase::getInstance()->getInterfaces().powerManagement;
+    auto primaryColor = this->getPrimaryColor();
+    auto backgroundColor = this->getBackgroundColor();
 
     auto chargeLevel = powerManagement->getLastBatteryLevel();;
     int chargeWidth = map(chargeLevel, 0, 100, 0, this->_width);
 
-    tft->drawRoundRect(this->_x, this->_y, this->_width, this->_height, 3, THEME_PRIMARY_COLOR);
-    tft->fillRoundRect(this->_x, this->_y, chargeWidth, this->_height, 3, THEME_PRIMARY_COLOR);
+    tft->drawRoundRect(this->_x, this->_y, this->_width, this->_height, 3, primaryColor);
+    tft->fillRoundRect(this->_x, this->_y, chargeWidth, this->_height, 3, primaryColor);
 
     this->setTextSizeTiny(tft);
     auto textChargeLevel = String(chargeLevel);
-    this->drawBorderedText(tft, textChargeLevel, this->_x + (this->_width - tft->textWidth(textChargeLevel)) / 2, this->_y + 5, 1, THEME_BACKGROUND_COLOR, THEME_PRIMARY_COLOR);
+    this->drawBorderedText(tft, textChargeLevel, this->_x + (this->_width - tft->textWidth(textChargeLevel)) / 2, this->_y + 5, 1, backgroundColor, primaryColor);
 }
 
 void BatteryTopBarIcon::setPosition(int x, int y)

@@ -23,6 +23,8 @@ extern "C"
             std::shared_ptr<Domain::Entities::DisplayInterfaceBase> getDisplayInterface();
             Domain::Entities::DisplaySettings getDisplaySettings();
             String translate(String key);
+            uint16_t getPrimaryColor();
+            uint16_t getBackgroundColor();
 
         public:
             virtual void render(std::shared_ptr<TFT_eSPI> tft) = 0;

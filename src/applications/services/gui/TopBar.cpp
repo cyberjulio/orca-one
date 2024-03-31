@@ -12,7 +12,7 @@ void TopBar::render(std::shared_ptr<TFT_eSPI> tft)
     auto sdCard = device->getInterfaces().sdCard;
     auto displaySettings = this->getDisplaySettings();
 
-    tft->setTextColor(THEME_PRIMARY_COLOR);
+    tft->setTextColor(this->getPrimaryColor());
 
     if (sdCard->isActive())
     {

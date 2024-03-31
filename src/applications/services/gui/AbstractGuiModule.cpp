@@ -19,6 +19,18 @@ String AbstractGuiModule::translate(String key)
     return Applications::Translate::getInstance()->get(key);
 }
 
+uint16_t Applications::Services::GUI::AbstractGuiModule::getPrimaryColor()
+{
+    auto displaySettings = DeviceBase::getInstance()->getSettings();
+    return colorToUInt16(displaySettings->getPrimaryColor());
+}
+
+uint16_t Applications::Services::GUI::AbstractGuiModule::getBackgroundColor()
+{
+    auto displaySettings = DeviceBase::getInstance()->getSettings();
+    return colorToUInt16(displaySettings->getBackgroundColor());
+}
+
 void AbstractGuiModule::setId(String id)
 {
     this->_id = id;

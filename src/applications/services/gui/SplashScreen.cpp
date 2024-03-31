@@ -15,16 +15,14 @@ void SplashScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
     auto displaySettings = this->getDisplaySettings();
-    auto primaryColor = device->getSettings()->getPrimaryColor();
-    auto backgroundColor = device->getSettings()->getBackgroundColor();
     auto splashFile = String("/imgs/splash_") + String(displaySettings.width) + String("x") + String(displaySettings.height) + String(".jpg");
 
     FileUtility::drawJpeg(SPIFFS, tft, splashFile.c_str(), 0, 0, displaySettings.width, displaySettings.height);
 
     vTaskDelay(pdMS_TO_TICKS(1000 * 2));
 
-    tft->fillScreen(colorToUInt16(backgroundColor));
-    tft->setTextColor(colorToUInt16(primaryColor));
+    tft->fillScreen(this->getBackgroundColor());
+    tft->setTextColor(this->getPrimaryColor());
 
     this->setTextSizeMedium(tft);
     auto title = String("Orca One");
