@@ -7,7 +7,7 @@ using namespace Applications::Services::GUI;
 
 ReadTagMenuScreen::ReadTagMenuScreen(std::shared_ptr<TFT_eSPI> tft) : MenuScreen(tft)
 {
-    MenuItem readTag("readTag", TRANSLATE("ReadMifare"));
+    MenuItem readTag("readTag", this->translate("ReadMifare"));
 
     readTag.setOnClick([tft]() {
         auto screnn = new ReadTagRun(tft);

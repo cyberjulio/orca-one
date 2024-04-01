@@ -29,7 +29,7 @@ void ReadTagRun::execute()
     if (!versiondata)
     {
         this->_tft->fillScreen(_backgroundColor);
-        this->showInfo(TRANSLATE("PN532NotFound"), 15, 35, this->_tft);
+        this->showInfo(this->translate("PN532NotFound"), 15, 35, this->_tft);
         vTaskDelay(pdMS_TO_TICKS(3000));
         // this->buttonBackPressed();
         this->_i2cInterface->end();
@@ -43,7 +43,7 @@ void ReadTagRun::execute()
         if (this->_isAgain)
         {
             this->_tft->fillScreen(_backgroundColor);
-            this->showInfo(TRANSLATE("WaitTag"), 10, 35, this->_tft);
+            this->showInfo(this->translate("WaitTag"), 10, 35, this->_tft);
 
             success = this->_nfc->readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
 
@@ -58,7 +58,7 @@ void ReadTagRun::execute()
             else
             {
                 this->_tft->fillScreen(_backgroundColor);
-                this->showInfo(TRANSLATE("ErrorTimeOut"), 40, 35, this->_tft);
+                this->showInfo(this->translate("ErrorTimeOut"), 40, 35, this->_tft);
             }
             this->_isAgain = false;
         }
@@ -100,14 +100,14 @@ void ReadTagRun::render(std::shared_ptr<TFT_eSPI> tft)
     this->setTextSizeSmall(tft);
     tft->setTextColor(_primaryColor);
 
-    String title = TRANSLATE("ReadMifare");
+    String title = this->translate("ReadMifare");
     auto titleX = (_displaySettings.width - tft->textWidth(title)) / 2;
 
     if (titleX < 0)
         titleX = 0;
 
     tft->drawString(title, titleX, 5);
-    String bottomText = String("OK:") + TRANSLATE("Again") + " ESC:" + TRANSLATE("Exit");
+    String bottomText = String("OK:") + this->translate("Again") + " ESC:" + this->translate("Exit");
     tft->setCursor((_displaySettings.width - tft->textWidth(bottomText)) / 2, _displaySettings.height - 20);
     tft->print(bottomText);
 }
