@@ -1,4 +1,4 @@
-name: "[CI/CD] Build"
+name: CI - Build
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
     branches:
       - main
       - develop
-      - feature/improvements
+      - feature/*
 
 jobs:
   build:
@@ -40,14 +40,12 @@ jobs:
           platformio run --target buildfs
 
       - name: Merge output binaries files
-        if: github.event_name != 'pull_request'
         run: |
               esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus1_1/release.bin    --flash_mode dio --flash_size 4MB 0x1000 .pio/build/m5stack-cplus1_1/bootloader.bin 0x8000  .pio/build/m5stack-cplus1_1/partitions.bin  0x10000 .pio/build/m5stack-cplus1_1/firmware.bin  0x210000 .pio/build/m5stack-cplus1_1/littlefs.bin
               esptool.py --chip esp32 merge_bin -o .pio/build/m5stack-cplus2/release.bin      --flash_mode dio --flash_size 8MB 0x1000 .pio/build/m5stack-cplus2/bootloader.bin 0x8000    .pio/build/m5stack-cplus2/partitions.bin    0x10000 .pio/build/m5stack-cplus2/firmware.bin    0x670000 .pio/build/m5stack-cplus2/littlefs.bin
               esptool.py --chip esp32s3 merge_bin -o .pio/build/m5stack-cardputer/release.bin --flash_mode dio --flash_size 8MB 0x0000 .pio/build/m5stack-cardputer/bootloader.bin 0x8000 .pio/build/m5stack-cardputer/partitions.bin 0x10000 .pio/build/m5stack-cardputer/firmware.bin 0x670000 .pio/build/m5stack-cardputer/littlefs.bin
         
       - name: Rename release.bin files
-        if: github.event_name != 'pull_request'
         run: |
           for file in $(find .pio/build/**/ -name 'release.bin'); do
             env=$(basename $(dirname "$file"))
@@ -58,8 +56,6 @@ jobs:
           ls .pio/build/**/OrcaOne*.bin
 
       - name: Upload Binaries
-        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
-          name: orca-one-artifacts
           path: .pio/build/**/OrcaOne*.bin

@@ -1,13 +1,12 @@
-name: "[CI/CD] Release"
+name: CD - Release
 
 on:
+  workflow_dispatch:
   workflow_run:
-    workflows: ["[CI/CD] Build"]
-    branches: 
-      - main
-      - feature/improvements
-    types: 
-      - completed
+    workflows: ['CI - Build']
+    types: [completed]
+    branches:
+        - main
 
 jobs:
   release:
@@ -22,8 +21,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: orca-one-artifacts
-          path: .pio/build/**/OrcaOne*.bin
+          path: ./artifacts
 
       - name: Create Release
         id: create_release
@@ -40,7 +38,7 @@ jobs:
 
       - name: Upload Binaries Release Assets
         run: |
-          for file in $(find .pio/build/** -name 'OrcaOne*.bin'); do
+          for file in $(find ./artifacts/** -name 'OrcaOne*.bin'); do
             echo "Uploading $file"
             curl \
               --http1.1 \
