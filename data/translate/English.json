@@ -15,5 +15,11 @@
     "PressAnyButtonToStop": "Press any button to stop",
     "Device": "Device",
     "Version": "Version",
-    "Contributors": "Contributors"
+    "Contributors": "Contributors",
+	"WaitTag": "Waiting for a tag",
+	"ErrorTimeOut": "Read timed out",
+	"PN532NotFound": "PN532 board not found",
+	"Again": "Again",
+	"Exit": "Exit",
+	"ReadMifare": "Read Mifare Tag"
 }

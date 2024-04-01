@@ -15,5 +15,11 @@
     "PressAnyButtonToStop": "Pressione qualquer botao para sair",
     "Device": "Dispositivo",
     "Version": "Versao",
-    "Contributors": "Contribuidores"
+    "Contributors": "Contribuidores",
+	"WaitTag": "Esperando por uma tag",
+	"ErrorTimeOut": "A leitura expirou",
+	"PN532NotFound": "Placa PN532 não encontrada",
+	"Again": "De novo",
+	"Exit": "Sair",
+	"ReadMifare": "Ler Mifare Tag"
 }

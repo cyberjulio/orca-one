@@ -5,6 +5,7 @@
 #include "../../infrared/tvbgone/TVBGoneApp.h"
 #include "../../Translate.h"
 #include "../../../domain/entities/Color.h"
+#include "../../nfc/ReadTag/ReadTagApp.h"
 
 using namespace Applications::Services::GUI;
 using namespace Applications;
@@ -15,7 +16,7 @@ MainMenuScreen::MainMenuScreen(std::shared_ptr<TFT_eSPI> tft) : MenuScreen(tft, 
     // this->addItem(newWifiMainMenuItem());
     // this->addItem(newBluetoothMainMenuItem());
     // this->addItem(newSubGhzMainMenuItem());
-    // this->addItem(newNfcMainMenuItem());
+    this->addItem(newNfcMainMenuItem());
     this->addItem(newInfraredMainMenuItem());
     // this->addItem(newBadUsbMainMenuItem());
     this->addItem(newSettingsMainMenuItem());
@@ -48,6 +49,11 @@ MenuItem MainMenuScreen::newSubGhzMainMenuItem()
 MenuItem MainMenuScreen::newNfcMainMenuItem()
 {
     MenuItem nfcMenuItem("nfcMenuItem", TRANSLATE("MainMenu_Nfc"));
+	MenuItem nfcReadTagSubMenuItem("nfcReadTagSubMenuItem", "Read Tag");
+
+    nfcReadTagSubMenuItem.setOnClick([]() { AppUtils::runApplication<Applications::Nfc::ReadTag::ReadTagApp>(); });
+
+    nfcMenuItem.addItem(nfcReadTagSubMenuItem);
     return nfcMenuItem;
 }
 

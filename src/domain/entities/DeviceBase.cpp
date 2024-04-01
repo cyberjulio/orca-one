@@ -1,4 +1,5 @@
 #include "DeviceBase.h"
+#include "I2CInterfaceBase.h"
 
 using namespace Domain::Entities;
 
@@ -22,6 +23,9 @@ DeviceBase::DeviceBase(Interfaces interfaces)
 
     if (this->_interfaces.sdCardInterface == nullptr)
         this->_interfaces.sdCardInterface = std::make_shared<SdCardInterfaceBase>();
+
+    if (this->_interfaces.i2cInterface == nullptr)
+        this->_interfaces.i2cInterface = std::make_shared<I2CInterfaceBase>();
 
     esp_chip_info(&this->_chip_info);
 
@@ -76,6 +80,9 @@ void DeviceBase::begin()
     if (this->_interfaces.infraredInterface != nullptr)
         this->_interfaces.infraredInterface->begin();
 
+    if (this->_interfaces.i2cInterface != nullptr)
+        this->_interfaces.i2cInterface->begin();
+
     delay(100);
 }
 
@@ -114,6 +121,9 @@ void DeviceBase::loop()
     if (this->_interfaces.infraredInterface != nullptr)
         this->_interfaces.infraredInterface->loop();
 
+	if (this->_interfaces.i2cInterface != nullptr)
+        this->_interfaces.i2cInterface->loop();
+
     delay(150);
 }
 
@@ -143,6 +153,8 @@ bool DeviceBase::hasInterface(InterfaceType type)
         return this->_interfaces.buttonsInterface != nullptr;
     case InterfaceType::Infrared:
         return this->_interfaces.infraredInterface != nullptr;
+    case InterfaceType::I2C:
+        return this->_interfaces.i2cInterface != nullptr;
     default:
         return false;
     }
