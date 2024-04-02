@@ -17,11 +17,10 @@ extern "C"
         class ProgressBar : public AbstractGuiModule
         {
         protected:
-            int _borderColor = DEFAULT_PRIMARY_COLOR;
-            int _backgroundColor = DEFAULT_BACKGROUND_COLOR;
-            int _progressColor = DEFAULT_PRIMARY_COLOR;
-            int _textColor = DEFAULT_PRIMARY_COLOR;
-            int _invertedTextColor = DEFAULT_INVERTED_COLOR;
+            int _borderColor = -1;
+            int _backgroundColor = -1;
+            int _progressColor = -1;
+            int _textColor = -1;
             int _width = -1;
             int _height = 25;
             int _x = -1;
@@ -38,7 +37,6 @@ extern "C"
             void setBackgroundColor(int color);
             void setProgressColor(int color);
             void setTextColor(int color);
-            void setInvertedTextColor(int color);
             void setWidth(int width);
             void setPosition(int x, int y);
             void setProgress(int progress);

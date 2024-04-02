@@ -33,7 +33,7 @@ extern "C"
         void showInfo(String msg, int posX, int posY, std::shared_ptr<TFT_eSPI> tft);
 
 		DeviceBase *_device = DeviceBase::getInstance();
-		std::shared_ptr<DisplayInterfaceBase> _displayInterface = _device->getInterfaces().displayInterface;
+		std::shared_ptr<DisplayInterfaceBase> _displayInterface = _device->getInterfaces().display;
 		DisplaySettings _displaySettings = _displayInterface->getSettings();
 		uint16_t _primaryColor = colorToUInt16(_device->getSettings()->getPrimaryColor());
 		uint16_t _backgroundColor = colorToUInt16(_device->getSettings()->getBackgroundColor());
@@ -41,7 +41,7 @@ extern "C"
       public:
         ReadTagRun(std::shared_ptr<TFT_eSPI> tft) : Screen(tft)
         {
-			this->_i2cInterface = DeviceBase::getInstance()->getInterfaces().i2cInterface;
+			this->_i2cInterface = DeviceBase::getInstance()->getInterfaces().i2c;
 			this->_pn532i2c = new PN532_I2C(*(this->_i2cInterface->_wire));
 			this->_nfc = new PN532(*this->_pn532i2c);
         }

@@ -19,8 +19,8 @@ void RunScreen::execute()
     this->_isRunning = true;
     this->_stopping = false;
 
-    auto infraredInterface = DeviceBase::getInstance()->getInterfaces().infraredInterface;
-    auto irSend = infraredInterface->getIRSend();
+    auto infrared = DeviceBase::getInstance()->getInterfaces().infrared;
+    auto irSend = infrared->getIRSend();
 
     if (this->_region == TVBGoneRegion::AmericasAsia)
     {
@@ -77,7 +77,10 @@ void RunScreen::execute()
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 
-    infraredInterface->disable();
+    this->_progressBar.setProgress(100);
+    this->_progressBar.render(this->_tft);
+
+    infrared->disable();
 
     this->_isRunning = false;
     this->_stopping = false;
@@ -98,8 +101,7 @@ void RunScreen::start()
 
 void RunScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
 
     this->setTextSizeSmall(tft);
 
@@ -112,9 +114,9 @@ void RunScreen::render(std::shared_ptr<TFT_eSPI> tft)
     if (titleX < 0)
         titleX = 0;
 
-    tft->drawString(title, titleX, 5);
+    tft->drawString(title, titleX, this->_topBarHeight + 5);
     tft->setCursor(0, displaySettings.height - 35);
-    tft->println(TRANSLATE("PressAnyButtonToStop"));
+    tft->println(this->translate("PressAnyButtonToStop"));
 
     int progressBarMargin = 10;
     this->_progressBar.setPosition(progressBarMargin, (displaySettings.height - this->_progressBar.getHeight()) / 2);

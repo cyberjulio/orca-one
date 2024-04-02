@@ -6,25 +6,32 @@ using namespace Domain::Entities;
 
 #include <TFT_eSPI.h>
 
+ButtonMenu::ButtonMenu()
+{
+    auto primaryColor = this->getPrimaryColor();
+    auto backgroundColor = this->getBackgroundColor();
+
+    this->_borderColor = primaryColor;
+    this->_textColor = primaryColor;
+    this->_backgroundColor = backgroundColor;
+}
+
 void ButtonMenu::render(std::shared_ptr<TFT_eSPI> tft)
 {
     auto device = DeviceBase::getInstance();
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
-    auto primaryColor = colorToUInt16(device->getSettings()->getPrimaryColor());
-    auto backgroundColor = colorToUInt16(device->getSettings()->getBackgroundColor());
+    auto displaySettings = this->getDisplaySettings();
 
     // Draw button border
-    tft->drawRoundRect(this->_x, this->_y, displaySettings.width - 20, 25, 8, primaryColor);
+    tft->drawRoundRect(this->_x, this->_y, displaySettings.width - 20, 25, 8, this->_borderColor);
 
     // Draw button fill
     if (this->isSelected())
-        tft->fillRoundRect(this->_x, this->_y, displaySettings.width - 20, 25, 8, primaryColor);
+        tft->fillRoundRect(this->_x, this->_y, displaySettings.width - 20, 25, 8, this->_borderColor);
 
     if (this->isSelected())
-        tft->setTextColor(backgroundColor);
+        tft->setTextColor(this->_backgroundColor);
     else
-        tft->setTextColor(primaryColor);
+        tft->setTextColor(this->_textColor);
 
     this->setTextSizeSmall(tft);
     tft->setTextDatum(TL_DATUM);
@@ -45,11 +52,6 @@ void ButtonMenu::setBackgroundColor(int color)
 void ButtonMenu::setTextColor(int color)
 {
     this->_textColor = color;
-}
-
-void ButtonMenu::setSelectedTextColor(int color)
-{
-    this->_selectedTextColor = color;
 }
 
 void ButtonMenu::setSize(int width, int height)

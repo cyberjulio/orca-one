@@ -17,10 +17,9 @@ extern "C"
         class ButtonMenu : public AbstractGuiModule
         {
         protected:
-            int _borderColor = DEFAULT_PRIMARY_COLOR;
-            int _backgroundColor = DEFAULT_PRIMARY_COLOR;
-            int _textColor = DEFAULT_PRIMARY_COLOR;
-            int _selectedTextColor = DEFAULT_INVERTED_COLOR;
+            int _borderColor = -1;
+            int _backgroundColor = -1;
+            int _textColor = -1;
             int _width = -1;
             int _height = -1;
             int _x = -1;
@@ -30,12 +29,13 @@ extern "C"
             std::function<void()> _onClick = nullptr;
 
         public:
+            ButtonMenu();
+
             void render(std::shared_ptr<TFT_eSPI> tft);
 
             void setBorderColor(int color);
             void setBackgroundColor(int color);
             void setTextColor(int color);
-            void setSelectedTextColor(int color);
             void setSize(int width, int height);
             void setPosition(int x, int y);
             void setText(String text);

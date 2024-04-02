@@ -9,43 +9,45 @@ bool ScreenManager::_initialized = false;
 
 ScreenManager::ScreenManager(std::shared_ptr<TFT_eSPI> tft)
 {
-    this->_tft = tft;
-
     if (ScreenManager::_initialized)
     {
         throw std::runtime_error("ScreenManager previous initialized. Please, define ScreenManager only time. Use: ScreenManager::getInstance()");
     }
 
+    this->_tft = tft;
+    this->_topBar = new TopBar();
+
     ScreenManager::_initialized = true;
     ScreenManager::_instance = this;
 
-    auto buttonsInterface = DeviceBase::getInstance()->getInterfaces().buttonsInterface;
+    auto buttons = DeviceBase::getInstance()->getInterfaces().buttons;
 
     auto menuScreen = this;
 
-    if (buttonsInterface != nullptr)
+    if (buttons != nullptr)
     {
-        buttonsInterface->registerOnClickNext([this]()
+        buttons->registerOnClickNext([this]()
                                               { _currentScreen->buttonNextPressed(); });
 
-        buttonsInterface->registerOnClickPrevious([this]()
+        buttons->registerOnClickPrevious([this]()
                                                   { _currentScreen->buttonPreviousPressed(); });
 
-        buttonsInterface->registerOnClickSelect([this]()
+        buttons->registerOnClickSelect([this]()
                                                 { _currentScreen->buttonSelectPressed(); });
 
-        buttonsInterface->registerOnClickBack([this]()
+        buttons->registerOnClickBack([this]()
                                               { _currentScreen->buttonBackPressed(); });
     }
 }
 
 void ScreenManager::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto device = DeviceBase::getInstance();
-    auto backgroundColor = colorToUInt16(device->getSettings()->getBackgroundColor());
-    tft->fillScreen(backgroundColor);
+    tft->setTextColor(this->getPrimaryColor());
+    tft->fillScreen(this->getBackgroundColor());
     this->setTextSizeSmall(tft);
+    
     this->_currentScreen->render(tft);
+    this->_topBar->render(tft);
 }
 
 ScreenManager *ScreenManager::getInstance()
@@ -55,10 +57,10 @@ ScreenManager *ScreenManager::getInstance()
 
 void ScreenManager::render()
 {
-    this->render(this->_tft);
+    ScreenManager::_instance->render(ScreenManager::_instance->_tft);
 }
 
-void ScreenManager::setCurrentScreen(Screen *newScreen)
+void ScreenManager::setCurrentScreen(Screen *newScreen, bool setPrevious)
 {
     auto manager = ScreenManager::getInstance();
     bool isBack = manager->_currentScreen != nullptr && manager->_currentScreen->getPreviousScreen() == newScreen ? true : false;
@@ -69,7 +71,7 @@ void ScreenManager::setCurrentScreen(Screen *newScreen)
         manager->_currentScreen = nullptr;
         delete screenToDelete;
     }
-    else
+    else if (setPrevious)
     {
         newScreen->setPreviousScreen(manager->_currentScreen);
     }

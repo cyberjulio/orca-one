@@ -11,12 +11,12 @@ namespace Applications
     class AppUtils
     {
     public:
-        static void runApplication(std::shared_ptr<AppBase> app);
+        static void runApplication(AppBase * app);
 
         template <typename T>
         static void runApplication()
         {
-            auto app = std::make_shared<T>();
+            auto app = new T();
             AppUtils::runApplication(app);
         }
     };

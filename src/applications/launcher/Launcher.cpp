@@ -28,9 +28,8 @@ Launcher *Launcher::getInstance()
 
 void Launcher::begin()
 {
-    auto tft = DeviceBase::getInstance()->getInterfaces().displayInterface->getTFT();
-    auto device = DeviceBase::getInstance();
-    auto settings = device->getSettings();
+    auto tft = DeviceBase::getInstance()->getInterfaces().display->getTFT();
+    auto settings = DeviceBase::getInstance()->getSettings();
     auto language = settings->getLanguage();
     auto primaryColor = settings->getPrimaryColor();
     auto backgroundColor = settings->getBackgroundColor();
@@ -40,8 +39,8 @@ void Launcher::begin()
 
     this->_translate = Translate::fromFile(language, SPIFFS_STORAGE, String("/translate/" + languageToString(language) + ".json").c_str());
     this->_screenManager = new ScreenManager(tft);
-    this->_screenManager->setCurrentScreen(new SplashScreen(tft));
-    this->_screenManager->setCurrentScreen(new MainMenuScreen(tft));
+    this->_screenManager->setCurrentScreen<SplashScreen>(false);
+    this->_screenManager->setCurrentScreen<MainMenuScreen>(false);
 }
 
 void Launcher::loop()

@@ -15,17 +15,17 @@ DeviceBase::DeviceBase(Interfaces interfaces)
 
     this->_interfaces = interfaces;
 
-    if (this->_interfaces.wifiInterface == nullptr)
-        this->_interfaces.wifiInterface = std::make_shared<WifiInterfaceBase>();
+    if (this->_interfaces.wifi == nullptr)
+        this->_interfaces.wifi = std::make_shared<WifiInterfaceBase>();
 
-    if (this->_interfaces.bluetoothInterface == nullptr)
-        this->_interfaces.bluetoothInterface = std::make_shared<BluetoothInterfaceBase>();
+    if (this->_interfaces.bluetooth == nullptr)
+        this->_interfaces.bluetooth = std::make_shared<BluetoothInterfaceBase>();
 
-    if (this->_interfaces.sdCardInterface == nullptr)
-        this->_interfaces.sdCardInterface = std::make_shared<SdCardInterfaceBase>();
+    if (this->_interfaces.sdCard == nullptr)
+        this->_interfaces.sdCard = std::make_shared<SdCardInterfaceBase>();
 
-    if (this->_interfaces.i2cInterface == nullptr)
-        this->_interfaces.i2cInterface = std::make_shared<I2CInterfaceBase>();
+    if (this->_interfaces.i2c == nullptr)
+        this->_interfaces.i2c = std::make_shared<I2CInterfaceBase>();
 
     esp_chip_info(&this->_chip_info);
 
@@ -47,82 +47,82 @@ void DeviceBase::begin()
 
     this->_settings = Settings::fromFile(SPIFFS_STORAGE, SETTINGS_FILE_NAME);
 
-    if (this->_interfaces.displayInterface != nullptr)
-        this->_interfaces.displayInterface->begin();
+    if (this->_interfaces.display != nullptr)
+        this->_interfaces.display->begin();
 
-    if (this->_interfaces.powerManagementInterface != nullptr)
-        this->_interfaces.powerManagementInterface->begin();
+    if (this->_interfaces.powerManagement != nullptr)
+        this->_interfaces.powerManagement->begin();
 
-    if (this->_interfaces.batteryInterface != nullptr)
-        this->_interfaces.batteryInterface->begin();
+    if (this->_interfaces.wifi != nullptr)
+        this->_interfaces.wifi->begin();
 
-    if (this->_interfaces.wifiInterface != nullptr)
-        this->_interfaces.wifiInterface->begin();
+    if (this->_interfaces.bluetooth != nullptr)
+        this->_interfaces.bluetooth->begin();
 
-    if (this->_interfaces.bluetoothInterface != nullptr)
-        this->_interfaces.bluetoothInterface->begin();
+    if (this->_interfaces.led != nullptr)
+        this->_interfaces.led->begin();
 
-    if (this->_interfaces.ledInterface != nullptr)
-        this->_interfaces.ledInterface->begin();
+    if (this->_interfaces.sdCard != nullptr)
+        this->_interfaces.sdCard->begin();
 
-    if (this->_interfaces.sdCardInterface != nullptr)
-        this->_interfaces.sdCardInterface->begin();
+    if (this->_interfaces.gps != nullptr)
+        this->_interfaces.gps->begin();
 
-    if (this->_interfaces.gpsInterface != nullptr)
-        this->_interfaces.gpsInterface->begin();
+    if (this->_interfaces.keyboard != nullptr)
+        this->_interfaces.keyboard->begin();
 
-    if (this->_interfaces.keyboardInterface != nullptr)
-        this->_interfaces.keyboardInterface->begin();
+    if (this->_interfaces.buttons != nullptr)
+        this->_interfaces.buttons->begin();
 
-    if (this->_interfaces.buttonsInterface != nullptr)
-        this->_interfaces.buttonsInterface->begin();
+    if (this->_interfaces.infrared != nullptr)
+        this->_interfaces.infrared->begin();
 
-    if (this->_interfaces.infraredInterface != nullptr)
-        this->_interfaces.infraredInterface->begin();
+    if (this->_interfaces.microphone != nullptr)
+        this->_interfaces.microphone->begin();
 
-    if (this->_interfaces.i2cInterface != nullptr)
-        this->_interfaces.i2cInterface->begin();
+    if (this->_interfaces.i2c != nullptr)
+        this->_interfaces.i2c->begin();
 
     delay(100);
 }
 
 void DeviceBase::loop()
 {
-    if (this->_interfaces.displayInterface != nullptr)
-        this->_interfaces.displayInterface->loop();
+    if (this->_interfaces.display != nullptr)
+        this->_interfaces.display->loop();
 
-    if (this->_interfaces.powerManagementInterface != nullptr)
-        this->_interfaces.powerManagementInterface->loop();
+    if (this->_interfaces.powerManagement != nullptr)
+        this->_interfaces.powerManagement->loop();
 
-    if (this->_interfaces.batteryInterface != nullptr)
-        this->_interfaces.batteryInterface->loop();
+    if (this->_interfaces.wifi != nullptr)
+        this->_interfaces.wifi->loop();
 
-    if (this->_interfaces.wifiInterface != nullptr)
-        this->_interfaces.wifiInterface->loop();
+    if (this->_interfaces.bluetooth != nullptr)
+        this->_interfaces.bluetooth->loop();
 
-    if (this->_interfaces.bluetoothInterface != nullptr)
-        this->_interfaces.bluetoothInterface->loop();
+    if (this->_interfaces.led != nullptr)
+        this->_interfaces.led->loop();
 
-    if (this->_interfaces.ledInterface != nullptr)
-        this->_interfaces.ledInterface->loop();
+    if (this->_interfaces.sdCard != nullptr)
+        this->_interfaces.sdCard->loop();
 
-    if (this->_interfaces.sdCardInterface != nullptr)
-        this->_interfaces.sdCardInterface->loop();
+    if (this->_interfaces.gps != nullptr)
+        this->_interfaces.gps->loop();
 
-    if (this->_interfaces.gpsInterface != nullptr)
-        this->_interfaces.gpsInterface->loop();
+    if (this->_interfaces.keyboard != nullptr)
+        this->_interfaces.keyboard->loop();
 
-    if (this->_interfaces.keyboardInterface != nullptr)
-        this->_interfaces.keyboardInterface->loop();
+    if (this->_interfaces.buttons != nullptr)
+        this->_interfaces.buttons->loop();
 
-    if (this->_interfaces.buttonsInterface != nullptr)
-        this->_interfaces.buttonsInterface->loop();
+    if (this->_interfaces.infrared != nullptr)
+        this->_interfaces.infrared->loop();
 
-    if (this->_interfaces.infraredInterface != nullptr)
-        this->_interfaces.infraredInterface->loop();
+    if (this->_interfaces.microphone != nullptr)
+        this->_interfaces.microphone->loop();
 
-	if (this->_interfaces.i2cInterface != nullptr)
-        this->_interfaces.i2cInterface->loop();
+	if (this->_interfaces.i2c != nullptr)
+        this->_interfaces.i2c->loop();
 
     delay(150);
 }
@@ -132,29 +132,29 @@ bool DeviceBase::hasInterface(InterfaceType type)
     switch (type)
     {
     case InterfaceType::Display:
-        return this->_interfaces.displayInterface != nullptr;
+        return this->_interfaces.display != nullptr;
     case InterfaceType::PowerManagement:
-        return this->_interfaces.powerManagementInterface != nullptr;
-    case InterfaceType::Battery:
-        return this->_interfaces.batteryInterface != nullptr;
+        return this->_interfaces.powerManagement != nullptr;
     case InterfaceType::Wifi:
-        return this->_interfaces.wifiInterface != nullptr;
+        return this->_interfaces.wifi != nullptr;
     case InterfaceType::Bluetooth:
-        return this->_interfaces.bluetoothInterface != nullptr;
+        return this->_interfaces.bluetooth != nullptr;
     case InterfaceType::Led:
-        return this->_interfaces.ledInterface != nullptr;
+        return this->_interfaces.led != nullptr;
     case InterfaceType::SdCard:
-        return this->_interfaces.sdCardInterface != nullptr;
+        return this->_interfaces.sdCard != nullptr;
     case InterfaceType::Gps:
-        return this->_interfaces.gpsInterface != nullptr;
+        return this->_interfaces.gps != nullptr;
     case InterfaceType::Keyboard:
-        return this->_interfaces.keyboardInterface != nullptr;
+        return this->_interfaces.keyboard != nullptr;
     case InterfaceType::Buttons:
-        return this->_interfaces.buttonsInterface != nullptr;
+        return this->_interfaces.buttons != nullptr;
     case InterfaceType::Infrared:
-        return this->_interfaces.infraredInterface != nullptr;
+        return this->_interfaces.infrared != nullptr;
+    case InterfaceType::Microphone:
+        return this->_interfaces.microphone != nullptr;
     case InterfaceType::I2C:
-        return this->_interfaces.i2cInterface != nullptr;
+        return this->_interfaces.i2c != nullptr;
     default:
         return false;
     }

@@ -17,7 +17,7 @@ MenuItem MenuScreen::newBackItem()
         ScreenManager::setCurrentScreen(currentScreen);
     };
 
-    auto item = MenuItem("backMenuItem", TRANSLATE("Back"));
+    auto item = MenuItem("backMenuItem", this->translate("Back"));
 
     item.setOnClick(action);
 
@@ -37,12 +37,9 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::render(std::shared_ptr<TFT_eSPI> tft)
 {
-    auto device = DeviceBase::getInstance();
-    auto backgroundColor = colorToUInt16(device->getSettings()->getBackgroundColor());
-    tft->fillScreen(backgroundColor);
+    tft->fillScreen(this->getBackgroundColor());
 
-    auto displayInterface = DeviceBase::getInstance()->getInterfaces().displayInterface;
-    auto displaySettings = displayInterface->getSettings();
+    auto displaySettings = this->getDisplaySettings();
 
     int totalItems = this->_items.size();
 
@@ -80,9 +77,11 @@ void MenuScreen::render(std::shared_ptr<TFT_eSPI> tft)
         }
     }
 
+    auto marginStart = 0; // 10
+
     for (int i = 0; i < itemsToShow.size(); i++)
     {
-        itemsToShow.at(i).setPosition(5, 10 + (i * 30));
+        itemsToShow.at(i).setPosition(5, this->_topBarHeight + marginStart + (i * 28));
         itemsToShow.at(i).render(this->_tft);
     }
 
@@ -133,7 +132,7 @@ void MenuScreen::buttonNextPressed()
 
     this->getCurrentItem()->setSelected(true);
 
-    Screen::render();
+    ScreenManager::render();
 }
 
 void MenuScreen::buttonPreviousPressed()
@@ -154,7 +153,7 @@ void MenuScreen::buttonPreviousPressed()
 
     this->getCurrentItem()->setSelected(true);
 
-    Screen::render();
+    ScreenManager::render();
 }
 
 void MenuScreen::buttonSelectPressed()

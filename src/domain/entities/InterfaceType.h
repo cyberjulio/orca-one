@@ -9,7 +9,6 @@ extern "C"
         enum InterfaceType
         {
             Display,
-            Battery,
             Wifi,
             Bluetooth,
             Led,
@@ -19,7 +18,8 @@ extern "C"
             Keyboard,
             Buttons,
             Infrared,
-			I2C
+			I2C,
+            Microphone
         };
     }
 #ifdef __cplusplus
