@@ -43,6 +43,8 @@ uint16_t Domain::Entities::colorToUInt16(Color color)
             return TFT_MAROON;
         case Color::Purple:
             return TFT_PURPLE;
+        default:
+            return 0; // or any other default value
     }
 }
 
